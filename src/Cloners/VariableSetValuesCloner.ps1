@@ -81,7 +81,12 @@ function Copy-OctopusVariableSetValues
                 $foundIndex = $i                
                 break
             }
-        }   
+        }
+        
+        if ($CloneScriptOptions.VariableNameTransformer -ne $null)
+        {
+            $octopusVariable.Name = Invoke-Command -ScriptBlock $CloneScriptOptions.VariableNameTransformer -Name $octopusVariable.Name
+        }
      
         if ($foundIndex -eq -1)
         {

@@ -9,7 +9,9 @@ param (
     $DestinationVariableSetName,
     $OverwriteExistingVariables,    
     $IgnoreVersionCheckResult,
-    $SkipPausingWhenIgnoringVersionCheckResult        
+    $SkipPausingWhenIgnoringVersionCheckResult,
+    [ScriptBlock]
+    $VariableNameTransformer
 )
 
 . (Join-Path $PSScriptRoot "src" "Core" "Logging.ps1")
@@ -42,7 +44,8 @@ if ($null -eq $SkipPausingWhenIgnoringVersionCheckResult)
 $CloneScriptOptions = @{
     OverwriteExistingVariables = $OverwriteExistingVariables;     
     LibraryVariableSetsToClone = $SourceVariableSetName;
-    DestinationVariableSetName = $DestinationVariableSetName;   
+    DestinationVariableSetName = $DestinationVariableSetName;
+    VariableNameTransformer = $VariableNameTransformer;
 }
 
 Write-OctopusVerbose "The clone parameters sent in are:"
